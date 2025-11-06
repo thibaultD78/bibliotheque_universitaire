@@ -1,0 +1,11 @@
+<h1>Liste des livres<h1>
+
+<ul>
+    {% for livre in livres %}
+        <li>{{ livre.titre|e }}</li>
+        <li>{{ livre.auteur|e }}</li>
+        <li>{{ livre.disponible|e }}</li>
+        <li>{{ livre.nombre_exemplaires|e }}</li>
+        <br>
+    {% endfor %}
+</ul>
