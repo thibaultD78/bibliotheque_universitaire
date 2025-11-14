@@ -1,0 +1,11 @@
+<ul>
+    {% for livre in livres %}
+        {% if livre.genre == genre %}
+            <li>{{ livre.titre|e }}</li>
+            <li>{{ livre.auteur|e }}</li>
+            <li>{{ livre.disponible|e }}</li>
+            <li>{{ livre.nombre_exemplaires|e }}</li>
+            <br>
+        {% endif %}
+    {% endfor %}
+</ul>
