@@ -3,6 +3,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class LivreController extends AbstractController
 {
@@ -97,13 +98,35 @@ class LivreController extends AbstractController
             ]);
         }    
     }
-     #[Route('/api/catalogue')]
-    public function json(): JsonResponse
+    #[Route('/api/catalogue')]
+    public function Returnjson(): JsonResponse
     {
        
-        return $this->render('bibliotheque/livres.html.twig', [
-            'livres' => $this->livres,
-        ]);
+        return $this->json([$this->livres]);
         
     }
+    #[Route('/statistiques')]
+    public function stat(): Response
+    {
+        $nbEmprun=0;
+        $nbDispo=0;
+        $nblivres= count($this->livres);
+        foreach ($this->livres as $livre ){
+            if ($livre['nombre_exemplaires']==0){
+                $nbEmprun=$nbEmprun+1;
+            }
+            else{
+                $nbDispo=$nbDispo+$livre['nombre_exemplaires'];
+            }
+        }
+
+        return $this->render('bibliotheque/stat.html.twig', [
+                'nbLivres' => $nblivres,
+                'livres'=>$this->livres,
+                'nbDispo'=>$nbDispo,
+                'nbEmprun'=>$nbEmprun,
+            ]);
+        
+    }
+
 }

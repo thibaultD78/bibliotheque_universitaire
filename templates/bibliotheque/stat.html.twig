@@ -1,0 +1,22 @@
+<h1>nombre total d'ouvrages {{nbLivres}}<h1>
+{% set genres = {} %}
+{% for livre in livres %}
+    {% set genre = livre.genre %}
+    {% if genre not in genres %}
+        {% set genres = genres|merge({ (genre): [livre] }) %}
+    {% else %}
+        {% set genres = genres|merge({ (genre): genres[genre]|merge([livre]) }) %}
+    {% endif %}
+{% endfor %}
+<ul>
+    {% for genre, liste in genres %}
+        <li><strong>{{ genre }}</strong></li>
+        <ul>
+            {% for livre in liste %}
+                <li>{{ livre.titre }}</li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
+</ul>
+<p>nombre de livres disponible {{nbDispo}} nombre de livres empruntés {{nbEmprun}}
+<a href="/bibliotheque/app_accueil">Retour a l'acceil</a>
